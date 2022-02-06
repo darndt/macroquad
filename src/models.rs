@@ -129,6 +129,35 @@ pub fn draw_plane(center: Vec3, size: Vec2, texture: impl Into<Option<Texture2D>
     draw_quad([v1, v2, v3, v4]);
 }
 
+pub fn draw_plane_xy(center: Vec3, size: Vec2, texture: impl Into<Option<Texture2D>>, color: Color) {
+    let v1 = (
+        (center + vec3(-size.x, -size.y, 0.)).into(),
+        vec2(0., 0.),
+        color,
+    );
+    let v2 = (
+        (center + vec3(-size.x, size.y, 0.)).into(),
+        vec2(0., 1.),
+        color,
+    );
+    let v3 = (
+        (center + vec3(size.x, size.y, 0.)).into(),
+        vec2(1., 1.),
+        color,
+    );
+    let v4 = (
+        (center + vec3(size.x, -size.y, 0.)).into(),
+        vec2(1., 0.),
+        color,
+    );
+
+    {
+        let context = get_context();
+        context.gl.texture(texture.into());
+    }
+    draw_quad([v1, v2, v3, v4]);
+}
+
 pub fn draw_cube(position: Vec3, size: Vec3, texture: impl Into<Option<Texture2D>>, color: Color) {
     let context = get_context();
     context.gl.texture(texture.into());
